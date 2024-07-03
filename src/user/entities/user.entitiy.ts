@@ -2,7 +2,7 @@ import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeor
 
 import { Role } from '../types/userRole.type';
 
-@Index('email', ['email'], { unique: true })
+//@Index('email', ['email'], { unique: true })
 @Entity({
   name: 'users',
 })
@@ -10,7 +10,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', unique: true, nullable: false })
+  @Column({ type: 'varchar', unique: true})
   email: string;
 
   @Column({type: 'varchar', unique: true, nullable: false})
@@ -22,6 +22,6 @@ export class User {
   @Column({ type: 'enum', enum: Role, default: Role.User })
   role: Role;
 
-  @Column({type: 'int', nullable: false})
+  @Column({type: 'int', default: 1000000 })
   point: number;
 }
