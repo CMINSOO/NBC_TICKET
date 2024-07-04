@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Concert } from './concert.entity';
 
 @Entity({
@@ -8,9 +8,6 @@ export class ConcertTime {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'int', unique: true, nullable: false })
-  concertid: Concert;
-
   @Column({type: 'datetime', nullable:false})
   concert_time : Date;
 
@@ -18,5 +15,9 @@ export class ConcertTime {
   seat : number;
 
   @ManyToOne(() => Concert, (concert)=> concert.concerttimes)
-  concert:Concert;
+  @JoinColumn({name:'concertid' })
+  concert:Concert; 
+
+  @Column({name:'concertid'})
+  concertid:number
 }

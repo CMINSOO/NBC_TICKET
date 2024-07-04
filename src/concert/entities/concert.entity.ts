@@ -27,6 +27,6 @@ export class Concert {
   @Column({type: 'varchar', nullable: true})
   poster: string;
 
-  @OneToMany(() => ConcertTime, (concerttime) => concerttime.concertid)
+  @OneToMany(() => ConcertTime, (concerttime) => concerttime.concert)
   concerttimes: ConcertTime[];  
 }
