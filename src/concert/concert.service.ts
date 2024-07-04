@@ -4,19 +4,33 @@ import { Repository } from 'typeorm';
 import { CreateConcertDto } from './dto/create-concert.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import _ from 'lodash';
+import { ConcertTime } from './entities/concert-time.entity';
 
 @Injectable()
 export class ConcertService {
     constructor(
         @InjectRepository(Concert) 
         private concertRepository: Repository<Concert>,
+        @InjectRepository(ConcertTime)
+        private concerttimeRepository:Repository<ConcertTime>,
     ) {}
 
 
     async create(createConcertDto:CreateConcertDto){
-        console.log(createConcertDto)
-        return (await this.concertRepository.save(createConcertDto)).id
-    }
+        const{ seat, concerttime, ...newconcertdata} = createConcertDto
+        console.log(newconcertdata)
+        const newconcert = await this.concertRepository.save(newconcertdata)
+        const concerttimedata = concerttime.map((concerttime)=>({
+            concert_time:concerttime,
+            seat:seat,
+            concert: newconcert
+        }))
+        console.log(concerttimedata)
+        const newconcerttime = await this.concerttimeRepository.save(concerttimedata)
+        return newconcert
+    } 
+    
+    
 
     async findAll(): Promise<Concert[]>{
         return await this.concertRepository.find({
@@ -30,7 +44,7 @@ export class ConcertService {
 
     async findByCategory(category: string){
         return await this.concertRepository.find({
-            where: {category}
+            where: {category}, relations: ['concerttime']
         })
     }
 
