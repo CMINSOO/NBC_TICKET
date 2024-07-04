@@ -1,8 +1,9 @@
-import {  Injectable } from '@nestjs/common';
+import {  Injectable, NotFoundException } from '@nestjs/common';
 import { Concert } from './entities/concert.entity';
 import { Repository } from 'typeorm';
 import { CreateConcertDto } from './dto/create-concert.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import _ from 'lodash';
 
 @Injectable()
 export class ConcertService {
@@ -22,5 +23,24 @@ export class ConcertService {
             select:['id', 'concertname']
         })
     }
+
+    async findOne(id:number){
+        return await this.verifyConcertById(id)
+    }
+
+    async findByCategory(category: string){
+        return await this.concertRepository.find({
+            where: {category}
+        })
+    }
+
+    private async verifyConcertById(id: number) {
+        const concert = await this.concertRepository.findOneBy({ id });
+        if (_.isNil(concert)) {
+          throw new NotFoundException('존재하지 않는 콘서트입니다.');
+        }
+    
+        return concert ;
+      }
 }
  
