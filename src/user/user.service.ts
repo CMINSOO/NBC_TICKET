@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from './entities/user.entitiy'
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class UserService {
@@ -16,7 +17,8 @@ export class UserService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(email: string, password: string, nickname: string) {
+  async register(loginDto:LoginDto) {
+    const {email, password, nickname, role} = loginDto
     const existingUser = await this.findByEmail(email);
     if (existingUser) {
       throw new ConflictException(
@@ -29,6 +31,7 @@ export class UserService {
       email,
       password: hashedPassword,
       nickname,
+      role,
     });
   }
 

@@ -8,6 +8,9 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { User } from './user/entities/user.entitiy';
 import { UserModule } from './user/user.module';
+import { ConcertModule } from './concert/concert.module';
+import { Concert } from './concert/entities/concert.entity';
+import { ConcertTime } from './concert/entities/concert-time.entity';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -20,7 +23,7 @@ const typeOrmModuleOptions = {
     host: configService.get('DB_HOST'),
     port: configService.get('DB_PORT'),
     database: configService.get('DB_NAME'),
-    entities: [User], // 엔티티는 반드시 여기에 명시!
+    entities: [User, Concert, ConcertTime], // 엔티티는 반드시 여기에 명시!
     synchronize: configService.get('DB_SYNC'),
     logging: true,
   }),
@@ -44,6 +47,7 @@ const typeOrmModuleOptions = {
     TypeOrmModule.forRootAsync(typeOrmModuleOptions),
     AuthModule,
     UserModule,
+    ConcertModule,
   ],
   controllers: [],
   providers: [],
