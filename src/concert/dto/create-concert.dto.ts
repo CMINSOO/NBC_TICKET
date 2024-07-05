@@ -1,7 +1,6 @@
 import { IsArray, IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
 import { Category } from '../types/concertCategory.type';
 import { Type } from 'class-transformer';
-import { date } from 'joi';
 
 export class CreateConcertDto {
   @IsString()

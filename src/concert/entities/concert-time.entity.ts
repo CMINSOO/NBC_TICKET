@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Concert } from './concert.entity';
+import { Booking } from 'src/booking/entities/booking.entity';
 
 @Entity({
   name: 'concerttime',
@@ -18,6 +19,6 @@ export class ConcertTime {
   @JoinColumn({name:'concertid' })
   concert:Concert; 
 
-  @Column({name:'concertid'})
-  concertid:number
+  @OneToMany(() => Booking, (bookings)=> bookings.concerttime)
+  bookings:Booking
 }
