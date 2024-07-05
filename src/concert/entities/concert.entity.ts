@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Category } from '../types/concertCategory.type';
 import { ConcertTime } from './concert-time.entity';
+import { Booking } from 'src/booking/entities/booking.entity';
 
 @Entity({
   name: 'concert',
@@ -29,4 +30,8 @@ export class Concert {
 
   @OneToMany(() => ConcertTime, (concerttime) => concerttime.concert)
   concerttimes: ConcertTime[];  
+
+  @OneToMany(() => Booking, (bookings) => bookings.concert)
+  bookings: Booking[];
+
 }

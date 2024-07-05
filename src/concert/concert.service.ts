@@ -44,7 +44,7 @@ export class ConcertService {
 
     async findByCategory(category: string){
         return await this.concertRepository.find({
-            where: {category}, relations: ['concerttime']
+            where: {category}, relations: ['concerttimes']
         })
     }
 

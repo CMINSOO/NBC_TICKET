@@ -1,6 +1,6 @@
 import { compare, hash } from 'bcrypt';
 import _ from 'lodash';
-import { Repository } from 'typeorm';
+import { QueryRunner, Repository } from 'typeorm';
 
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -16,6 +16,16 @@ export class UserService {
     private userRepository: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
+
+  async deductBalance(user: User, price: number, queryRunner: QueryRunner) {
+      const finalpoint = user.point - price
+      console.log(finalpoint)
+      console.log(user.point)
+      console.log(price)
+      const newuserpoint = this.userRepository.merge(user, {point:finalpoint})
+      await queryRunner.manager.save(newuserpoint)
+      return
+  }
 
   async register(loginDto:LoginDto) {
     const {email, password, nickname, role} = loginDto
