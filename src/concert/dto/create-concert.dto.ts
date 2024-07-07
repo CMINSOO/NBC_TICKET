@@ -1,4 +1,4 @@
-import { IsArray, IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import { IsArray, IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 import { Category } from '../types/concertCategory.type';
 import { Type } from 'class-transformer';
 
@@ -20,6 +20,7 @@ export class CreateConcertDto {
   location: string;
 
   @IsNumber()
+  @Max(50000)
   @IsNotEmpty({message: "가격을 입력해주세요."})
   price: number;
 

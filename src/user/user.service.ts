@@ -47,7 +47,7 @@ export class UserService {
 
   async login(email: string, password: string) {
     const user = await this.userRepository.findOne({
-      select: ['id', 'email', 'password'],
+      select: ['id', 'email', 'password','role'],
       where: { email },
     });
     if (_.isNil(user)) {

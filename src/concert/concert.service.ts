@@ -49,7 +49,7 @@ export class ConcertService {
     }
 
     private async verifyConcertById(id: number) {
-        const concert = await this.concertRepository.findOneBy({ id });
+        const concert = await this.concertRepository.findOneBy({ id});
         if (_.isNil(concert)) {
           throw new NotFoundException('존재하지 않는 콘서트입니다.');
         }

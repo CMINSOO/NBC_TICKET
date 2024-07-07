@@ -7,9 +7,9 @@ import { Concert } from 'src/concert/entities/concert.entity';
 import { ConcertService } from 'src/concert/concert.service';
 import { UserService } from 'src/user/user.service';
 import { ConcertTime } from 'src/concert/entities/concert-time.entity';
-import _ from 'lodash';
 import { Status } from './types/status.type';
 import { User } from 'src/user/entities/user.entitiy';
+import _ from 'lodash';
 
 @Injectable()
 export class BookingService {
@@ -80,5 +80,13 @@ export class BookingService {
           await queryRunner.release();
         }
 
+     }
+
+     async findBooking(id:number){
+        const booking = await this.bookingRepository.findOneBy({id});
+        if (_.isNil(booking)){
+          throw new NotFoundException('존재하지 않는 예약건입니다.')
+        }
+        return booking
      }
 }
