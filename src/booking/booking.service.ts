@@ -39,6 +39,9 @@ export class BookingService {
         if(concertTime.seat <= 0){
             throw new BadRequestException('예약 가능한 좌석이 없습니다.')
         }
+        if(price > user.point){
+          throw new BadRequestException('포인트가 부족합니다')
+        }
 
     
         const queryRunner = this.dataSource.createQueryRunner();
@@ -70,7 +73,7 @@ export class BookingService {
         }
 
      }
-     
+
      async findBooking(id:number){
         const booking = await this.bookingRepository.findOneBy({id});
         if (_.isNil(booking)){
