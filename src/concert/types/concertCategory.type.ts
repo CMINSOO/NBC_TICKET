@@ -4,5 +4,5 @@ export enum Category {
     Kpop = "Kpop",
     classic = "classic",
     Festival = "Festival",
-    EDM = "EDM ",
+    EDM = "EDM",
 }

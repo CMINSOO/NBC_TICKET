@@ -40,22 +40,15 @@ export class BookingService {
             throw new BadRequestException('예약 가능한 좌석이 없습니다.')
         }
 
-        //트랜잭션 시작하기
+    
         const queryRunner = this.dataSource.createQueryRunner();
-        
         await queryRunner.connect();
         await queryRunner.startTransaction();
     
         try {
-          // 유저 포인트 차감
-          console.log("가격", price)
           await this.userService.deductBalance(user, price, queryRunner);
-          console.log("1")
-          // 좌석 상태 변경 후 저장
           concertTime.seat -= 1;
           await queryRunner.manager.save(concertTime);
-          console.log("2")
-          // 예약 기록 남기기
           console.log(concertId, concertTimeId)
           const newBookingData = {
             userid: user.id,
@@ -64,14 +57,10 @@ export class BookingService {
             price,
             status: Status.BOOKED, // 기본 상태
           };
-          console.log("3")
           const newBooking = this.bookingRepository.create(newBookingData);
-          console.log("4")
           console.log(newBookingData)
           await queryRunner.manager.save(newBooking);
-          console.log("5")
           await queryRunner.commitTransaction();
-          console.log("6")
           return newBooking;
         } catch (error) {
           await queryRunner.rollbackTransaction();
