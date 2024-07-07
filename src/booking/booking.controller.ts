@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { UserInfo } from 'src/utils/userInfo.decorator';
 import { User } from 'src/user/entities/user.entitiy';
@@ -19,6 +19,11 @@ export class BookingController {
     ){
         console.log(user)
         return this.bookingservice.createBooking(createBookingDto, user)
+    } 
+
+    @Get(':id')
+    async findBooking(@Param('id') id: number){
+        return await this.bookingservice.findBooking(id)
     }
-     
+        
 }

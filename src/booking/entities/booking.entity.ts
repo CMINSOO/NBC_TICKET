@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import { Concert } from 'src/concert/entities/concert.entity';
 import { User } from 'src/user/entities/user.entitiy';
 import { ConcertTime } from 'src/concert/entities/concert-time.entity';
