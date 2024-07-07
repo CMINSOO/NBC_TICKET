@@ -19,9 +19,6 @@ export class UserService {
 
   async deductBalance(user: User, price: number, queryRunner: QueryRunner) {
       const finalpoint = user.point - price
-      console.log(finalpoint)
-      console.log(user.point)
-      console.log(price)
       const newuserpoint = this.userRepository.merge(user, {point:finalpoint})
       await queryRunner.manager.save(newuserpoint)
       return
