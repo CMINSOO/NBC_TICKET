@@ -1,4 +1,4 @@
-import {  Injectable, NotFoundException } from '@nestjs/common';
+import {  BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Concert } from './entities/concert.entity';
 import { Repository } from 'typeorm';
 import { CreateConcertDto } from './dto/create-concert.dto';
@@ -17,7 +17,7 @@ export class ConcertService {
 
 
     async create(createConcertDto:CreateConcertDto){
-        const{ seat, concerttime, ...newconcertdata} = createConcertDto
+       /**const{ seat, concerttime, ...newconcertdata} = createConcertDto
         console.log(newconcertdata)
         const newconcert = await this.concertRepository.save(newconcertdata)
         const concerttimedata = concerttime.map((concerttime)=>({
@@ -27,14 +27,37 @@ export class ConcertService {
         }))
         console.log(concerttimedata)
         const newconcerttime = await this.concerttimeRepository.save(concerttimedata)
-        return newconcert
+        return newconcert**/
+
+        //시간별로 콘서트 등록 따로하게 만들기
+        const { seat, concerttime,...newconcertdata} = createConcertDto
+        //findOneBy에 인자값으로 바로 newconcertdata.concertname 으로 넣을수없어 따로뺴준후 투입
+        const concertname = newconcertdata.concertname
+        const existName = await this.concertRepository.findOneBy({concertname})
+        console.log(existName)
+        //중복등록을 위한 에러처리
+        if(existName){
+            throw new BadRequestException('해당 콘서트는 이미 등록되있습니다')
+        }
+
+        const newConcert = await this.concertRepository.save(newconcertdata)
+        const concertTimeData = concerttime.map((concertTime)=> ({
+            concert_time:concertTime,
+            seat: seat,
+            concert: newConcert,
+        }));
+        const newConertTime = await this.concerttimeRepository.save(concertTimeData)
+        return concertTimeData
     } 
     
     
 
     async findAll(): Promise<Concert[]>{
         return await this.concertRepository.find({
-            select:['id', 'concertname']
+            select:['id', 'concertname'],
+            order:{
+                id: "DESC"
+            }
         })
     }
 

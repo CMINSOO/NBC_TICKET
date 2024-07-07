@@ -70,7 +70,7 @@ export class BookingService {
         }
 
      }
-
+     
      async findBooking(id:number){
         const booking = await this.bookingRepository.findOneBy({id});
         if (_.isNil(booking)){
