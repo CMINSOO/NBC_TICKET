@@ -33,6 +33,11 @@ export class UserService {
       );
     }
 
+    const existingNickname = await this.userRepository.findOneBy(nickname);
+    if(existingNickname){
+      throw new ConflictException('사용중인 닉네임 입니다.')
+    }
+
     const hashedPassword = await hash(password, 10);
     await this.userRepository.save({
       email,

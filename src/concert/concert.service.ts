@@ -29,6 +29,8 @@ export class ConcertService {
         const newconcerttime = await this.concerttimeRepository.save(concerttimedata)
         return newconcert**/
 
+
+
         //시간별로 콘서트 등록 따로하게 만들기
         const { seat, concerttime,...newconcertdata} = createConcertDto
         //findOneBy에 인자값으로 바로 newconcertdata.concertname 으로 넣을수없어 따로뺴준후 투입
@@ -51,7 +53,11 @@ export class ConcertService {
     } 
     
     
-
+//질문할거: Promise<Concert[]> 가 뭘하는 지 모르겠음 콘서트 배열?을 Promise?
+//findAll()함수가 Concert[]을 반환하고?반환타입은 Promise?
+//Promise 는 비동기 작업의 결과를 나타내는 객체
+//비동기는? 서버에게 요청을 하면 응답을 기다리지않고, 다른 작업을 수행할수있는형태
+//그럼 Promise:<Concert[]> 는 콘서트 배열을 반환하면서 이걸 비동기적으로 처리한다는말인가?
     async findAll(): Promise<Concert[]>{
         return await this.concertRepository.find({
             select:['id', 'concertname'],
