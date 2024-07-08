@@ -41,7 +41,7 @@ export class ConcertService {
         if(existName){
             throw new BadRequestException('해당 콘서트는 이미 등록되있습니다')
         }
-
+       
         const newConcert = await this.concertRepository.save(newconcertdata)
         const concertTimeData = concerttime.map((concertTime)=> ({
             concert_time:concertTime,

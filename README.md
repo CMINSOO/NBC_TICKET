@@ -25,6 +25,7 @@
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+네스트 기반으로 만들어진 공연 예메 사이트
 
 ## Installation
 
@@ -71,3 +72,11 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## ERD
+
+https://drawsql.app/teams/-1296/diagrams/final
+
+## API 명세서
+
+https://secretive-uranium-993.notion.site/75d749b009ea49b59e4079a68dfa56da?v=19779d4904224a838e8d76c8c133a18b&p=960927d4b65b4613b533da1e011fa5d6&pm=s

@@ -31,7 +31,7 @@ export class BookingService {
         if(!concert){
             throw new NotFoundException('공연을 찾을수 없습니다');
         }
-
+      
         const concertTime = await this.concerttimeRepository.findOne({where:{id:concertTimeId}});
         if(!concertTime){
             throw new NotFoundException('공연시간을 찾을수 없습니다');
