@@ -33,7 +33,7 @@ export class UserService {
       );
     }
 
-    const existingNickname = await this.userRepository.findOneBy(nickname);
+    const existingNickname = await this.userRepository.findOneBy({nickname});
     if(existingNickname){
       throw new ConflictException('사용중인 닉네임 입니다.')
     }
